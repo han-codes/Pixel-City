@@ -12,10 +12,17 @@ import MapKit
 class MapVC: UIViewController {
 
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var pullUpView: UIView!
+    @IBOutlet weak var pullUpViewHeightConstraint: NSLayoutConstraint!
     
     var locationManager = CLLocationManager()
     let authorizationStatus = CLLocationManager.authorizationStatus()
     let regionRadius: Double = 1000         // 1000 meters wide and high for our MKCoordinateRegion
+    
+    var screenSize = UIScreen.main.bounds   // gets the size of the screen
+    
+    var spinner: UIActivityIndicatorView?
+    var progressLbl: UILabel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +33,38 @@ class MapVC: UIViewController {
         checkAuthorizationStatus()
         centerMapOnLocation()
         doubleTapped()
+    }
+    
+    func animateViewUp() {
+        pullUpViewHeightConstraint.constant = 300
+        
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()          // updates view layout before drawing
+        }
+    }
+    
+    func addSwipe() {
+        let swipe = UISwipeGestureRecognizer(target: self, action: #selector(animateViewDown))
+        swipe.direction = .down
+        pullUpView.addGestureRecognizer(swipe)
+    }
+    
+    @objc func animateViewDown() {
+        pullUpViewHeightConstraint.constant = 0
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    func addSpinner() {
+        // Needs center, style, start animating, and color
+        spinner = UIActivityIndicatorView()
+        spinner?.center = CGPoint(x: (screenSize.width / 2) - ((spinner?.frame.width)! / 2), y: 150)       // centers the spinner vertically and horizontally in pullUpView
+        spinner?.style = .whiteLarge
+        spinner?.color = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
+        spinner?.startAnimating()
+        
+        pullUpView.addSubview(spinner!)
     }
     
     @IBAction func centerMapBtnPressed(_ sender: Any) {        
@@ -50,6 +89,7 @@ extension MapVC: MKMapViewDelegate {
         return pinAnnotation
     }
     
+   
     // center map on user's location
     func centerMapOnLocation() {
         guard let coordinate = locationManager.location?.coordinate else { return }
@@ -60,6 +100,11 @@ extension MapVC: MKMapViewDelegate {
     // gets called by doubleTapped()
     @objc func dropPin(sender: UITapGestureRecognizer) {
         removePins()
+        
+        animateViewUp()
+        addSwipe()
+        addSpinner()
+        
         let touchPoint = sender.location(in: mapView)       // returns x, y values of the touched point
         
         // converts the x,y axis of the touch point to coordinates (lat, lon)

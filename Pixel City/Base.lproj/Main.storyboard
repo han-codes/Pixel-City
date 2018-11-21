@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" showsCompass="NO" translatesAutoresizingMaskIntoConstraints="NO" id="23k-hX-cJK">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="666"/>
                             </mapView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="50C-FT-7xx">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
@@ -43,7 +43,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sXL-VH-KtD">
-                                <rect key="frame" x="309" y="597" width="50" height="50"/>
+                                <rect key="frame" x="309" y="596" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="Udq-0O-b3L"/>
                                     <constraint firstAttribute="width" constant="50" id="ue8-2u-grL"/>
@@ -53,32 +53,35 @@
                                     <action selector="centerMapBtnPressed:" destination="Xbl-kE-YGH" eventType="touchUpInside" id="KU2-iy-GhG"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zfm-gY-Yms">
-                                <rect key="frame" x="0.0" y="667" width="375" height="0.0"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zfm-gY-Yms">
+                                <rect key="frame" x="0.0" y="666" width="375" height="1"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" id="y0m-zc-yqJ"/>
+                                    <constraint firstAttribute="height" constant="1" id="CI9-Zp-8ik"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="dhz-kJ-CAq" firstAttribute="bottom" secondItem="sXL-VH-KtD" secondAttribute="bottom" constant="20" id="0P2-qt-ZiC"/>
+                            <constraint firstAttribute="bottom" secondItem="Zfm-gY-Yms" secondAttribute="bottom" id="1B5-1H-y2s"/>
+                            <constraint firstAttribute="trailing" secondItem="23k-hX-cJK" secondAttribute="trailing" id="660-bA-vTf"/>
                             <constraint firstItem="23k-hX-cJK" firstAttribute="top" secondItem="HAS-do-rUe" secondAttribute="top" id="8IB-sG-DUB"/>
                             <constraint firstItem="Zfm-gY-Yms" firstAttribute="leading" secondItem="HAS-do-rUe" secondAttribute="leading" id="8Jg-8e-h3W"/>
-                            <constraint firstAttribute="bottom" secondItem="23k-hX-cJK" secondAttribute="bottom" id="GM7-Wo-kX9"/>
                             <constraint firstItem="50C-FT-7xx" firstAttribute="top" secondItem="HAS-do-rUe" secondAttribute="top" id="HZ1-PT-71P"/>
                             <constraint firstItem="dhz-kJ-CAq" firstAttribute="trailing" secondItem="50C-FT-7xx" secondAttribute="trailing" id="URB-ki-z7r"/>
-                            <constraint firstItem="23k-hX-cJK" firstAttribute="trailing" secondItem="dhz-kJ-CAq" secondAttribute="trailing" id="VhE-uW-92s"/>
+                            <constraint firstItem="Zfm-gY-Yms" firstAttribute="top" secondItem="23k-hX-cJK" secondAttribute="bottom" id="e4f-PZ-qDF"/>
+                            <constraint firstItem="23k-hX-cJK" firstAttribute="leading" secondItem="HAS-do-rUe" secondAttribute="leading" id="ey2-pJ-p8B"/>
                             <constraint firstItem="50C-FT-7xx" firstAttribute="leading" secondItem="dhz-kJ-CAq" secondAttribute="leading" id="gEX-3a-kE2"/>
                             <constraint firstAttribute="trailingMargin" secondItem="sXL-VH-KtD" secondAttribute="trailing" id="kR1-26-ij6"/>
                             <constraint firstAttribute="trailing" secondItem="Zfm-gY-Yms" secondAttribute="trailing" id="nCw-sk-hvd"/>
-                            <constraint firstItem="23k-hX-cJK" firstAttribute="leading" secondItem="dhz-kJ-CAq" secondAttribute="leading" id="sJy-b2-EDd"/>
+                            <constraint firstItem="Zfm-gY-Yms" firstAttribute="top" secondItem="sXL-VH-KtD" secondAttribute="bottom" constant="20" id="rRF-7B-U2w"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="dhz-kJ-CAq"/>
                     </view>
                     <connections>
                         <outlet property="mapView" destination="23k-hX-cJK" id="eeL-Wi-TMB"/>
+                        <outlet property="pullUpView" destination="Zfm-gY-Yms" id="kti-kA-awD"/>
+                        <outlet property="pullUpViewHeightConstraint" destination="CI9-Zp-8ik" id="qcr-FV-SJP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ost-Bh-P3I" userLabel="First Responder" sceneMemberID="firstResponder"/>
