@@ -22,7 +22,10 @@ class MapVC: UIViewController {
     var screenSize = UIScreen.main.bounds   // gets the size of the screen
     
     var spinner: UIActivityIndicatorView?
-    var progressLbl: UILabel?    
+    var progressLbl: UILabel?
+    
+    var flowLayout = UICollectionViewFlowLayout()     // need to create collection view programmatically
+    var collectionView: UICollectionView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +36,14 @@ class MapVC: UIViewController {
         checkAuthorizationStatus()
         centerMapOnLocation()
         doubleTapped()
+        
+        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: flowLayout)
+        collectionView?.register(PhotoCell.self, forCellWithReuseIdentifier: "photoCell")
+        collectionView?.delegate = self
+        collectionView?.dataSource = self
+        collectionView?.backgroundColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
+        
+        pullUpView.addSubview(collectionView!)
     }
     
     // animates the pullUpView up by increasing height constant constraint
@@ -48,7 +59,7 @@ class MapVC: UIViewController {
     func addSwipe() {
         let swipe = UISwipeGestureRecognizer(target: self, action: #selector(animateViewDown))
         swipe.direction = .down
-        pullUpView.addGestureRecognizer(swipe)
+        collectionView?.addGestureRecognizer(swipe)
     }
     
     @objc func animateViewDown() {
@@ -67,7 +78,7 @@ class MapVC: UIViewController {
         spinner?.color = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
         spinner?.startAnimating()
         
-        pullUpView.addSubview(spinner!)
+        collectionView?.addSubview(spinner!)
     }
     
     func removeSpinner() {
@@ -173,5 +184,20 @@ extension MapVC: UIGestureRecognizerDelegate {
         doubleTap.numberOfTapsRequired = 2
         doubleTap.delegate = self
         mapView.addGestureRecognizer(doubleTap)
+    }
+}
+
+extension MapVC: UICollectionViewDelegate, UICollectionViewDataSource {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 4
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "photoCell", for: indexPath) as? PhotoCell
+        return cell!
     }
 }
