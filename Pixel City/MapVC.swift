@@ -22,7 +22,7 @@ class MapVC: UIViewController {
     var screenSize = UIScreen.main.bounds   // gets the size of the screen
     
     var spinner: UIActivityIndicatorView?
-    var progressLbl: UILabel?
+    var progressLbl: UILabel?    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +35,7 @@ class MapVC: UIViewController {
         doubleTapped()
     }
     
+    // animates the pullUpView up by increasing height constant constraint
     func animateViewUp() {
         pullUpViewHeightConstraint.constant = 300
         
@@ -43,6 +44,7 @@ class MapVC: UIViewController {
         }
     }
     
+    // swipe down to hide pullUpView
     func addSwipe() {
         let swipe = UISwipeGestureRecognizer(target: self, action: #selector(animateViewDown))
         swipe.direction = .down
@@ -50,14 +52,15 @@ class MapVC: UIViewController {
     }
     
     @objc func animateViewDown() {
-        pullUpViewHeightConstraint.constant = 0
+        pullUpViewHeightConstraint.constant = 0     // hides the pullUpView
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
     }
     
+    // add spinner when pullUpView animates up
     func addSpinner() {
-        // Needs center, style, start animating, and color
+        // Needs center, style, start animating, and color for spinner
         spinner = UIActivityIndicatorView()
         spinner?.center = CGPoint(x: (screenSize.width / 2) - ((spinner?.frame.width)! / 2), y: 150)       // centers the spinner vertically and horizontally in pullUpView
         spinner?.style = .whiteLarge
@@ -65,6 +68,27 @@ class MapVC: UIViewController {
         spinner?.startAnimating()
         
         pullUpView.addSubview(spinner!)
+    }
+    
+    func removeSpinner() {
+        if spinner != nil {
+            spinner?.removeFromSuperview()
+        }
+    }
+    
+    func addProgressLbl() {
+        progressLbl = UILabel()
+        progressLbl?.frame = CGRect(x: (screenSize.width / 2) - 120, y: 175, width: 240, height: 40)
+        progressLbl?.font = UIFont(name: "Avenir Next", size: 18)
+        progressLbl?.textColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
+        progressLbl?.textAlignment = .center
+        pullUpView.addSubview(progressLbl!)
+    }
+    
+    func removeProgressLbl() {
+        if progressLbl != nil {
+            progressLbl?.removeFromSuperview()
+        }
     }
     
     @IBAction func centerMapBtnPressed(_ sender: Any) {        
@@ -78,10 +102,11 @@ class MapVC: UIViewController {
 extension MapVC: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        if annotation is MKUserLocation {
+        if annotation is MKUserLocation {   // don't want to make changes to the user's location annotation
             return nil
         }
         
+        // Creates an annotation w/ a pin image
         let pinAnnotation = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "droppablePin")
         pinAnnotation.tintColor = #colorLiteral(red: 0.9759346843, green: 0.5839473009, blue: 0.02618087828, alpha: 1)
         pinAnnotation.animatesDrop = true
@@ -100,10 +125,13 @@ extension MapVC: MKMapViewDelegate {
     // gets called by doubleTapped()
     @objc func dropPin(sender: UITapGestureRecognizer) {
         removePins()
+        removeSpinner()
+        removeProgressLbl()
         
         animateViewUp()
         addSwipe()
         addSpinner()
+        addProgressLbl()
         
         let touchPoint = sender.location(in: mapView)       // returns x, y values of the touched point
         
