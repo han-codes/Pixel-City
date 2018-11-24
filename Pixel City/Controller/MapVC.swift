@@ -69,6 +69,7 @@ class MapVC: UIViewController {
     }
     
     @objc func animateViewDown() {
+        cancelAllSession()
         pullUpViewHeightConstraint.constant = 0     // hides the pullUpView
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
@@ -144,13 +145,14 @@ extension MapVC: MKMapViewDelegate {
         removePins()
         removeSpinner()
         removeProgressLbl()
+        cancelAllSession()
         
         animateViewUp()
         addSwipe()
         addSpinner()
         addProgressLbl()
         
-        let touchPoint = sender.location(in: mapView)       // returns x, y values of the touched point
+        let touchPoint = sender.location(in: mapView)       // returns x, y values of the UITapGestureRecognizer touched point
         
         // converts the x,y axis of the touch point to coordinates (lat, lon)
         let touchCoordinate = mapView.convert(touchPoint, toCoordinateFrom: mapView)
@@ -187,7 +189,6 @@ extension MapVC: MKMapViewDelegate {
             let photosDict = json["photos"] as! Dictionary<String, AnyObject>
             let photosDictArray = photosDict["photo"] as! [Dictionary<String, AnyObject>]       // array of dictionaries
             for photo in photosDictArray {
-                //                let postUrl =
                 let postUrl = "https://farm\(photo["farm"]!).staticflickr.com/\(photo["server"]!)/\(photo["id"]!)_\(photo["secret"]!)_h_d.jpg"
                 self.imageUrlArray.append(postUrl)
             }
@@ -195,7 +196,7 @@ extension MapVC: MKMapViewDelegate {
         }
     }
     
-    // use the image urls to get UIImages 
+    // use the image urls to get UIImages
     func retrieveImages(handler: @escaping (_ status: Bool) -> ()) {
         imageArray = []
         
@@ -211,7 +212,14 @@ extension MapVC: MKMapViewDelegate {
                 
             }
         }
-        
+    }
+    
+    // cancels Alamofire requests
+    func cancelAllSession() {
+        Alamofire.SessionManager.default.session.getTasksWithCompletionHandler { (sessionDataTask, uploadTask, downloadTask) in
+            sessionDataTask.forEach({ $0.cancel() })
+            downloadTask.forEach({ $0.cancel() })
+        }
     }
 }
 
