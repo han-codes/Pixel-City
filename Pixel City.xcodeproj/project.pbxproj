@@ -89,7 +89,6 @@
 				F352583521A11704008F94ED /* View */,
 				F352583421A116A4008F94ED /* Controller */,
 				F352582221A1167C008F94ED /* AppDelegate.swift */,
-				F352582421A1167C008F94ED /* MapVC.swift */,
 				F352582621A1167C008F94ED /* Main.storyboard */,
 				F352582921A1167F008F94ED /* Assets.xcassets */,
 				F352582B21A1167F008F94ED /* LaunchScreen.storyboard */,
@@ -101,6 +100,7 @@
 		F352583421A116A4008F94ED /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				F352582421A1167C008F94ED /* MapVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
