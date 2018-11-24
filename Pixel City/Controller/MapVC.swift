@@ -96,7 +96,7 @@ class MapVC: UIViewController {
     func addProgressLbl() {
         progressLbl = UILabel()
         progressLbl?.frame = CGRect(x: (screenSize.width / 2) - 120, y: 175, width: 240, height: 40)
-        progressLbl?.font = UIFont(name: "Avenir Next", size: 18)
+        progressLbl?.font = UIFont(name: "Avenir Next", size: 14)
         progressLbl?.textColor = #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1)
         progressLbl?.textAlignment = .center
         pullUpView.addSubview(progressLbl!)
@@ -161,8 +161,15 @@ extension MapVC: MKMapViewDelegate {
         let coordinatRegion = MKCoordinateRegion.init(center: touchCoordinate, latitudinalMeters: regionRadius * 2, longitudinalMeters: regionRadius * 2)
         mapView.setRegion(coordinatRegion, animated: true)
         
-        retrieveUrls(annotation: annotation) { (true) in
-            print(self.imageUrlArray)
+        retrieveUrls(annotation: annotation) { (finished) in
+            if finished{
+                self.retrieveImages(handler: { (finished) in
+                    if finished {
+                        self.removeSpinner()
+                        self.removeProgressLbl()
+                    }
+                })
+            }
         }
     }
     
@@ -188,8 +195,23 @@ extension MapVC: MKMapViewDelegate {
         }
     }
     
+    // use the image urls to get UIImages 
     func retrieveImages(handler: @escaping (_ status: Bool) -> ()) {
         imageArray = []
+        
+        for url in imageUrlArray {
+            Alamofire.request(url).responseImage { (response) in
+                guard let image = response.result.value else { return } // pulls out image value
+                self.imageArray.append(image)
+                self.progressLbl?.text = "\(self.imageArray.count)/40 Images Downloaded"
+                
+                if self.imageArray.count == self.imageUrlArray.count {
+                    handler(true)
+                }
+                
+            }
+        }
+        
     }
 }
 
