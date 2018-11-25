@@ -11,6 +11,7 @@
 		F327008521A7950300159C24 /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F327008421A7950300159C24 /* PhotoCell.swift */; };
 		F327008721A7B19C00159C24 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F327008621A7B19C00159C24 /* Constants.swift */; };
 		F3294F8421A51AAE00D36347 /* DroppablePin.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3294F8321A51AAE00D36347 /* DroppablePin.swift */; };
+		F32EB63821AA18680069FB8D /* PopVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32EB63721AA18680069FB8D /* PopVC.swift */; };
 		F352582321A1167C008F94ED /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F352582221A1167C008F94ED /* AppDelegate.swift */; };
 		F352582521A1167C008F94ED /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F352582421A1167C008F94ED /* MapVC.swift */; };
 		F352582821A1167C008F94ED /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F352582621A1167C008F94ED /* Main.storyboard */; };
@@ -25,6 +26,7 @@
 		F327008421A7950300159C24 /* PhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
 		F327008621A7B19C00159C24 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		F3294F8321A51AAE00D36347 /* DroppablePin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DroppablePin.swift; sourceTree = "<group>"; };
+		F32EB63721AA18680069FB8D /* PopVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopVC.swift; sourceTree = "<group>"; };
 		F352581F21A1167C008F94ED /* Pixel City.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pixel City.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F352582221A1167C008F94ED /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F352582421A1167C008F94ED /* MapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
@@ -101,6 +103,7 @@
 			isa = PBXGroup;
 			children = (
 				F352582421A1167C008F94ED /* MapVC.swift */,
+				F32EB63721AA18680069FB8D /* PopVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -243,6 +246,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F32EB63821AA18680069FB8D /* PopVC.swift in Sources */,
 				F327008721A7B19C00159C24 /* Constants.swift in Sources */,
 				F327008521A7950300159C24 /* PhotoCell.swift in Sources */,
 				F352582521A1167C008F94ED /* MapVC.swift in Sources */,
